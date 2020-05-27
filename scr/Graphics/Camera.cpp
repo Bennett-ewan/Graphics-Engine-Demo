@@ -85,13 +85,16 @@ namespace Graphics
 
     void CameraSystem::Direction(const glm::vec3& direction)
     {
-      cam_front = glm::normalize(direction);
-      tilt = glm::degrees(asin(cam_front.y));
+      glm::vec3 dir = glm::normalize(direction);
 
-      spin = glm::degrees(asin((-cam_front.z / cos(glm::radians(tilt))))) + 180;
-      //dir.x = cos(glm::radians(spin)) * cos(glm::radians(tilt));
-      //dir.y = sin(glm::radians(tilt));
-      //dir.z = sin(glm::radians(spin)) * cos(glm::radians(tilt));
+      glm::vec2 old_x(cam_front.x, cam_front.z);
+      glm::vec2 new_x(dir.x, dir.z);
+      float angle_x = atan2(old_x.x * new_x.y - old_x.y * new_x.x, old_x.x * new_x.x + old_x.y * new_x.y);
+      spin += glm::degrees(angle_x);
+      
+      tilt = glm::degrees(asin(dir.y));
+
+      cam_front = dir;
     }
 
     glm::mat4 CameraSystem::World_Proj()
@@ -223,6 +226,7 @@ namespace Graphics
       Direction(cam_front);
       file.read(reinterpret_cast<char*>(&sensitivity), sizeof(float));
       file.read(reinterpret_cast<char*>(&fov), sizeof(float));
+      file.read(reinterpret_cast<char*>(&move_speed), sizeof(float));
     }
 
     void CameraSystem::Write(std::ofstream& file)
@@ -231,6 +235,7 @@ namespace Graphics
       file.write(reinterpret_cast<const char*>(&cam_front[0]), sizeof(glm::vec3));
       file.write(reinterpret_cast<const char*>(&sensitivity), sizeof(float));
       file.write(reinterpret_cast<const char*>(&fov), sizeof(float));
+      file.write(reinterpret_cast<const char*>(&move_speed), sizeof(float));
     }
 
     /*************************************************************/

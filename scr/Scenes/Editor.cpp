@@ -225,7 +225,8 @@ namespace Editor
           }
 
           if (ImGui::MenuItem("Open Scene")) {
-
+            deselect_object();
+            SceneManager::Next_Scene("SceneMenu");
           }
 
           if (ImGui::MenuItem("Save Scene", "CTRL+S")) {
@@ -279,9 +280,9 @@ namespace Editor
             new_object = true;
           }
 
-          if (ImGui::MenuItem("Edit Archetype")) {
-
-          }
+          //if (ImGui::MenuItem("Edit Archetype")) {
+          //
+          //}
           ImGui::EndMenu();
         }
 
@@ -348,7 +349,7 @@ namespace Editor
 
   void EditorSystem::open_new_object()
   {
-    if (ImGui::Begin("New Archetype"), &show_object_editor) {
+    if (ImGui::Begin("New Archetype"), &show_object_editor, window_flags) {
       ImGui::SetWindowPos(ImVec2((window_size.x / 2.f) - (window_size.x / 12.f), (window_size.y / 2.f) - (window_size.y / 16.f)));
       ImGui::SetWindowSize(ImVec2(window_size.x / 6.f, window_size.y / 8.f));
       ImGui::SetWindowFontScale(window_size.x / (float)DEFAULT_WIDTH);
@@ -374,7 +375,7 @@ namespace Editor
   void EditorSystem::scene_objects()
   {
     
-    if (ImGui::Begin("Scene Objects")) {
+    if (ImGui::Begin("Scene Objects", nullptr, window_flags)) {
       ImGui::SetWindowSize(ImVec2(window_size.x / 5.f, window_size.y / 2.1f));
       ImGui::SetWindowPos(ImVec2(0.f, (window_size.y / 60.f) + (window_size.y / 2.f)));
       ImGui::SetWindowFontScale(window_size.x / 1920.f);
@@ -421,7 +422,7 @@ namespace Editor
 
   void EditorSystem::Object_Editor(bool archetype)
   {
-    if (ImGui::Begin(std::string("Object Editor - " + selected_object->Name()).c_str())) {
+    if (ImGui::Begin(std::string("Object Editor - " + selected_object->Name()).c_str(), nullptr, window_flags)) {
       ImGui::SetWindowSize(ImVec2(window_size.x / 3.f, window_size.y / 1.5f));
       ImGui::SetWindowPos(ImVec2(window_size.x / 1.52f, window_size.y / 60.f));
       ImGui::SetWindowFontScale(window_size.x / 1920.f);
@@ -497,6 +498,11 @@ namespace Editor
 
       if (!selected_object->Active()) {
         if (ImGui::Button("Save Archetype", ImVec2(128, 64)) && selected_object) {
+          selected_object = nullptr;
+        }
+        ImGui::NewLine();
+        if (ImGui::Button("Remove Archetype", ImVec2(128, 64)) && selected_object) {
+          ObjectFactory::Remove_Archetype(selected_object);
           selected_object = nullptr;
         }
       }
@@ -710,7 +716,7 @@ namespace Editor
 
   void EditorSystem::texture_library(Graphics::Mesh* mesh, int index)
   {
-    if (ImGui::Begin("Texture Library", &show_texture_library))
+    if (ImGui::Begin("Texture Library", &show_texture_library, window_flags))
     {
       ImGui::SetWindowSize(ImVec2(window_size.x / 4.5f, window_size.y / 3.f));
       ImGui::SetWindowPos(ImVec2(window_size.x / 1.4f, window_size.y / 1.7f));
@@ -779,7 +785,7 @@ namespace Editor
 
   GameObject* EditorSystem::archetype_selector()
   {
-    if (ImGui::Begin("Archetype Selector", &show_archetype_selector))
+    if (ImGui::Begin("Archetype Selector", &show_archetype_selector, window_flags))
     {
       ImGui::SetWindowPos(ImVec2(window_size.x / 5.f, window_size.y / 2.f));
       ImGui::SetWindowSize(ImVec2(window_size.x / 5.f, window_size.y / 3.f));
@@ -805,7 +811,7 @@ namespace Editor
 
   void EditorSystem::component_selector()
   {
-    if (ImGui::Begin("Component Selector", &show_new_component))
+    if (ImGui::Begin("Component Selector", &show_new_component, window_flags))
     {
       ImGui::SetWindowPos(ImVec2(window_size.x / 1.7f, window_size.y / 15.f));
       ImGui::SetWindowSize(ImVec2(window_size.x / 6.4f, window_size.y / 3.6f));
@@ -838,46 +844,40 @@ namespace Editor
 
   void EditorSystem::mesh_selector()
   {
-    if (ImGui::Begin("Mesh Selector", &show_mesh_selector))
-    {
-      ImGui::SetWindowPos(ImVec2(window_size.x / 1.7f, window_size.y / 15.f));
+    if (ImGui::Begin("Mesh Selector", &show_mesh_selector, window_flags)) {
+      ImGui::SetWindowPos(ImVec2(window_size.x / 1.8f, window_size.y / 15.f));
       ImGui::SetWindowSize(ImVec2(window_size.x / 6.4f, window_size.y / 3.6f));
       ImGui::SetWindowFontScale(window_size.x / 1920.f);
 
-      Model* sprite = selected_object->Get(Model);
+      Model* model = selected_object->Get(Model);
 
-      if (ImGui::Button("Quad"))
-      {
+      if (ImGui::Button("Quad")) {
         Graphics::Mesh mesh = *Graphics::MeshLibrary::Get_Mesh("Quad");
-        sprite->Add_Mesh(mesh);
+        model->Add_Mesh(mesh);
         show_mesh_selector = false;
         unsaved_changes = true;
       }
-      else if (ImGui::Button("Triangle"))
-      {
+      else if (ImGui::Button("Triangle")) {
         Graphics::Mesh mesh = *Graphics::MeshLibrary::Get_Mesh("Triangle");
-        sprite->Add_Mesh(mesh);
+        model->Add_Mesh(mesh);
         show_mesh_selector = false;
         unsaved_changes = true;
       }
-      else if (ImGui::Button("Cube"))
-      {
+      else if (ImGui::Button("Cube")) {
         Graphics::Mesh mesh = *Graphics::MeshLibrary::Get_Mesh("Cube");
-        sprite->Add_Mesh(mesh);
+        model->Add_Mesh(mesh);
         show_mesh_selector = false;
         unsaved_changes = true;
       }
-      else if (ImGui::Button("Pyramid"))
-      {
+      else if (ImGui::Button("Pyramid")) {
         Graphics::Mesh mesh = *Graphics::MeshLibrary::Get_Mesh("Pyramid");
-        sprite->Add_Mesh(mesh);
+        model->Add_Mesh(mesh);
         show_mesh_selector = false;
         unsaved_changes = true;
       }
-      else if (ImGui::Button("Sphere"))
-      {
+      else if (ImGui::Button("Sphere")) {
         Graphics::Mesh mesh = *Graphics::MeshLibrary::Get_Mesh("Sphere");
-        sprite->Add_Mesh(mesh);
+        model->Add_Mesh(mesh);
         show_mesh_selector = false;
         unsaved_changes = true;
       }
@@ -885,9 +885,8 @@ namespace Editor
       const Models& models = ModelLibrary::Get_Models();
       for (Models::const_iterator it = models.begin(); it != models.end(); ++it)
       {
-        if (ImGui::Button(it->first.c_str()))
-        {
-          *sprite = ModelLibrary::Get_Model(it->first);
+        if (ImGui::Button(it->first.c_str())) {
+          *model = ModelLibrary::Get_Model(it->first);
           show_mesh_selector = false;
           unsaved_changes = true;
         }
@@ -898,7 +897,9 @@ namespace Editor
 
   void EditorSystem::deselect_object()
   {
-    selected_object->Get(Model)->Active(true);
+    Model* model = selected_object->Get(Model);
+    if (model)
+      model->Active(true);
     selected_object = nullptr;
   }
 
@@ -1161,6 +1162,13 @@ namespace Editor
     if (ImGui::DragFloat("FOV", &fov, 1.0f / 100.f, MIN_FOV, MAX_FOV)) {
       unsaved_changes = true;
       Graphics::Camera::FOV(fov);
+    }
+    ImGui::NewLine();
+
+    float move_speed = Graphics::Camera::Move_Speed();
+    if (ImGui::DragFloat("Move Speed", &move_speed, 1.f / 100.f, 5.f, 100.f)) {
+      unsaved_changes = true;
+      Graphics::Camera::Move_Speed(move_speed);
     }
   }
 

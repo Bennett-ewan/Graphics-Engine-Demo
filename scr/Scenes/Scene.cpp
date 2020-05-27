@@ -322,6 +322,7 @@ void Scene::Load_Data()
     object->Read(infile);
     //if (object->Name() != "")
     objects.push_back(object);
+    infile.close();
   }
 }
 
@@ -362,6 +363,7 @@ void Scene::Save_Data()
   {
     objects[i]->Write(outfile);
   }
+  outfile.close();
 }
 
 

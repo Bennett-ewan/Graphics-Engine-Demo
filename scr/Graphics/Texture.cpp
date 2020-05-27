@@ -31,7 +31,7 @@ namespace Graphics
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     std::string file = filename;
-    int pos;
+    size_t pos;
     if ((pos = file.find(".tif")) != std::string::npos)
     {
       file.replace(pos + 1, 3, "png");

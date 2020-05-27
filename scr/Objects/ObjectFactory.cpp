@@ -122,6 +122,17 @@ namespace ObjectFactory
       }
     }
 
+    void Remove_Archetype(GameObject* object)
+    {
+      for (Archetypes::iterator it = archetypes_.begin(); it != archetypes_.end(); ++it)
+      {
+        if (&(it->second) == object) {
+          archetypes_.erase(it);
+          return;
+        }
+      }
+    }
+
   private:
     Archetypes archetypes_;
 
@@ -255,6 +266,11 @@ namespace ObjectFactory
   void Save_Archetype(GameObject* object)
   {
     Object_Factory->Save_Archetype(object);
+  }
+
+  void Remove_Archetype(GameObject* object)
+  {
+    Object_Factory->Remove_Archetype(object);
   }
 
 }
