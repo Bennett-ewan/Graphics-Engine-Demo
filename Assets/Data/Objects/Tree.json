@@ -1,0 +1,39 @@
+{
+  "Name": "Tree",
+  "Transform": {
+    "Translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Scale": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Rotation": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "Sprite": {
+    "Model": "Tree/Tree/Tree.obj",
+    "Ambient": [
+      0.1,
+      0.1,
+      0.1
+    ],
+    "Diffuse": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Specular": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Shininess": 5.0
+  }
+}

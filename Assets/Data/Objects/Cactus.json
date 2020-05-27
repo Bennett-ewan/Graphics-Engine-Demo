@@ -1,0 +1,39 @@
+{
+  "Name": "Cactus",
+  "Transform": {
+    "Translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Rotation": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "Sprite": {
+    "Model": "Cactus/10436_Cactus_v1_max2010_it2.obj",
+    "Ambient": [
+      0.1,
+      0.1,
+      0.1
+    ],
+    "Diffuse": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Specular": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Shininess": 5.0
+  }
+}

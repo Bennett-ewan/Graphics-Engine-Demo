@@ -1,0 +1,40 @@
+{
+  "Name": "Sky",
+  "Transform": {
+    "Translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Scale": [
+      500.0,
+      500.0,
+      500.0
+    ],
+    "Rotation": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "Sprite": {
+    "Primitive": "Sphere",
+	"Texture": "skydome.jpg",
+    "Ambient": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Diffuse": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Specular": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Shininess": 5.0
+  }
+}

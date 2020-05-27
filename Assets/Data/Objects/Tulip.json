@@ -1,0 +1,39 @@
+{
+  "Name": "Tulip",
+  "Transform": {
+    "Translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Rotation": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "Sprite": {
+    "Model": "Tulip/12978_tulip_flower_l3.obj",
+    "Ambient": [
+      0.1,
+      0.1,
+      0.1
+    ],
+    "Diffuse": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Specular": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Shininess": 5.0
+  }
+}

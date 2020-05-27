@@ -1,0 +1,39 @@
+{
+  "Name": "GrassPatch",
+  "Transform": {
+    "Translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Rotation": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "Sprite": {
+    "Model": "GrassPatch/10450_Rectangular_Grass_Patch_v1_iterations-2.obj",
+    "Ambient": [
+      0.1,
+      0.1,
+      0.1
+    ],
+    "Diffuse": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Specular": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Shininess": 5.0
+  }
+}
