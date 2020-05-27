@@ -17,4 +17,5 @@ namespace ObjectFactory
   GameObject* New_Archetype(const std::string& name);
   Archetypes& Get_Archetypes();
   void Save_Archetype(GameObject* object);
+  void Remove_Archetype(GameObject* object);
 }
