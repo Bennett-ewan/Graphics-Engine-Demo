@@ -104,6 +104,8 @@ void main()
 	{
 		vec4 tex = mix(texture(material.texture_diffuse1, uv), vec4(texture(skybox, R).rbg, 1.0), material.reflectiveness);
 		alpha = tex.a;
+		if (alpha < 0.1)
+			discard;
 		Kd = tex.rgb;
 	}
 	else
