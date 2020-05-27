@@ -100,7 +100,8 @@ void Scene::Update(float dt)
     Transform* transform = (*it)->Get(Transform);
     if (transform)
     {
-      float distance = glm::dot(Graphics::Camera::Eye(), transform->Translation());
+      //float distance = glm::dot(Graphics::Camera::Eye(), transform->Translation());
+      float distance = glm::length(Graphics::Camera::Eye() - transform->Translation());
       sorted_draw[distance] = std::make_pair(*it, count);
     }
     const std::vector<Graphics::Light*>& obj_lights = (*it)->Get_Lights();
@@ -131,10 +132,7 @@ void Scene::Draw()
   Graphics::Shader* shader = Graphics::Shaders::Get_Shader("Core");
   Graphics::Shader* shadow_shader = Graphics::Shaders::Get_Shader("Shadow");
 
-  if (skybox)
-  {
-    skybox->Draw();
-  }
+
 
   //shadow_shader->Use();
   //shadow_shader->Set_Uniform((int)20, "shadowMap");
@@ -161,7 +159,8 @@ void Scene::Draw()
   //glViewport(0, 0, width, height);
   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+  if (skybox)
+    skybox->Draw();
 
 
   shader->Use();
@@ -171,15 +170,22 @@ void Scene::Draw()
     shader->Set_Uniform(lights[0]->Matrix(), "lightSpaceMatrix");
   }
 
-  for (std::map<float, std::pair<GameObject*, unsigned>>::reverse_iterator it = sorted_draw.rbegin(); it != sorted_draw.rend(); ++it)
+  //for (std::map<float, std::pair<GameObject*, unsigned>>::reverse_iterator it = sorted_draw.rbegin(); it != sorted_draw.rend(); ++it)
+  //{
+  //  //glActiveTexture(GL_TEXTURE20);
+  //  //glBindTexture(GL_TEXTURE_2D, depthMap);
+  //  it->second.first->Draw();
+  //  if (it->second.first->Is_Destroy())
+  //    to_destroy.push_back(it->second.second);
+  //}
+  //sorted_draw.clear();
+
+
+  for (Objects::iterator it = objects.begin(); it != objects.end(); ++it)
   {
-    //glActiveTexture(GL_TEXTURE20);
-    //glBindTexture(GL_TEXTURE_2D, depthMap);
-    it->second.first->Draw();
-    if (it->second.first->Is_Destroy())
-      to_destroy.push_back(it->second.second);
+    if ((*it)->Active())
+      (*it)->Draw();
   }
-  sorted_draw.clear();
 
 
 }
@@ -195,7 +201,7 @@ void Scene::Shutdown()
 
 void Scene::Unload()
 {
-  Save_Data();
+  //Save_Data();
 
   num_point_lights = 0;
   num_dir_lights = 0;
@@ -320,10 +326,10 @@ void Scene::Load_Data()
     infile.read(&name[0], name_size);
     GameObject* object = new GameObject(std::string(name.c_str(), name_size));
     object->Read(infile);
-    //if (object->Name() != "")
-    objects.push_back(object);
-    infile.close();
+    if (object->Name() != "")
+      objects.push_back(object);
   }
+  infile.close();
 }
 
 

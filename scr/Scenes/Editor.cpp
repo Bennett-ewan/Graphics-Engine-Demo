@@ -706,7 +706,7 @@ namespace Editor
     //ImGui::NewLine();
 
     glm::vec3 rotate(transform->RotationX(), transform->RotationY(), transform->RotationZ());
-    if (ImGui::DragFloat3("Rotation", &rotate[0], 1.f / 25.f, -360, 360))
+    if (ImGui::DragFloat3("Rotation", &rotate[0], 1.f / 15.f, -360, 360))
       unsaved_changes = true;
     transform->Rotation(rotate);
     //ImGui::NewLine();
